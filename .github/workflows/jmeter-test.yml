@@ -1,4 +1,4 @@
-name: Run JMeter Tests
+﻿name: Run JMeter Tests
 
 on:
   push:
@@ -24,6 +24,19 @@ jobs:
           # echo "PATH=$JMETER_HOME/bin:$PATH" >> $GITHUB_ENV
           echo "JMETER_HOME=$(pwd)/apache-jmeter-5.6.3" >> $GITHUB_ENV
           echo "$JMETER_HOME/bin" >> $GITHUB_PATH
+
+      - name: Debug JMeter Installation
+        run: |
+            echo "🔍 Checking JMeter Installation..."
+            echo "JMETER_HOME: $JMETER_HOME"
+            ls -l $JMETER_HOME/bin
+            echo "🔍 Checking PATH..."
+            echo $PATH
+            echo "🔍 Checking if JMeter is recognized..."
+            command -v jmeter || echo "⚠️ JMeter not found in PATH"
+            echo "🔍 Trying to run JMeter directly from the extracted folder..."
+            $JMETER_HOME/bin/jmeter -v || echo "⚠️ JMeter execution failed!"
+
           
       - name: Verify JMeter Installation
         run: |
