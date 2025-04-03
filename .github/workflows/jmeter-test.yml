@@ -50,7 +50,7 @@ jobs:
 
       - name: Generate JMeter Report
         run: |
-          jmeter -g results.jtl -o report
+          $JMETER_HOME/bin/jmeter -g results.jtl -o report
 
       - name: Upload Test Report
         uses: actions/upload-artifact@v4
