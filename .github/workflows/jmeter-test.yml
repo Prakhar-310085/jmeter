@@ -20,8 +20,10 @@ jobs:
           sudo apt install -y openjdk-11-jdk
           wget https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.tgz
           tar -xvzf apache-jmeter-5.6.3.tgz
+          # echo "JMETER_HOME=$(pwd)/apache-jmeter-5.6.3" >> $GITHUB_ENV
+          # echo "PATH=$JMETER_HOME/bin:$PATH" >> $GITHUB_ENV
           echo "JMETER_HOME=$(pwd)/apache-jmeter-5.6.3" >> $GITHUB_ENV
-          echo "PATH=$JMETER_HOME/bin:$PATH" >> $GITHUB_ENV
+          echo "$JMETER_HOME/bin" >> $GITHUB_PATH
           
       - name: Verify JMeter Installation
         run: |
