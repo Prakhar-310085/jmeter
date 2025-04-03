@@ -1,0 +1,38 @@
+name: Run JMeter Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  jmeter-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JMeter
+        run: |
+          sudo apt update
+          sudo apt install -y openjdk-11-jdk
+          wget https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.2.tgz
+          tar -xvzf apache-jmeter-5.6.2.tgz
+          echo "JMETER_HOME=$(pwd)/apache-jmeter-5.6.2" >> $GITHUB_ENV
+          echo "PATH=$JMETER_HOME/bin:$PATH" >> $GITHUB_ENV
+
+      - name: Run JMeter Tests
+        run: |
+          jmeter -n -t sample_test.jmx -l results.jtl
+
+      - name: Generate JMeter Report
+        run: |
+          jmeter -g results.jtl -o report
+
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-report
+          path: report
