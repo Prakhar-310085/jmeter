@@ -22,6 +22,12 @@ jobs:
           tar -xvzf apache-jmeter-5.6.3.tgz
           echo "JMETER_HOME=$(pwd)/apache-jmeter-5.6.3" >> $GITHUB_ENV
           echo "PATH=$JMETER_HOME/bin:$PATH" >> $GITHUB_ENV
+          
+      - name: Verify JMeter Installation
+        run: |
+          echo "JMeter Home: $JMETER_HOME"
+          ls -l $JMETER_HOME/bin
+          which jmeter
 
       - name: Run JMeter Tests
         run: |
