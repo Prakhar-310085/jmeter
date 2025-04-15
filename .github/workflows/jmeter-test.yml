@@ -54,8 +54,7 @@ jobs:
             -Jusers=${USERS_COUNT} \
             -Jrampup=10 \
             -Jloops=5 \
-            -l results.jtl \
-            -e -o report
+            -l results.jtl
 
       - name: Generate JMeter Report
         run: |
