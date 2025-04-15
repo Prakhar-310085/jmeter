@@ -50,12 +50,12 @@ jobs:
       - name: Run JMeter Test with Parameters
         run: |
           $JMETER_HOME/bin/jmeter -n \
-            -t jmeter/sample_test.jmx \
+            -t sample_test.jmx \
             -Jusers=${USERS_COUNT} \
             -Jrampup=10 \
             -Jloops=5 \
-            -l jmeter/results.jtl \
-            -e -o jmeter/report
+            -l results.jtl \
+            -e -o report
 
       - name: Generate JMeter Report
         run: |
