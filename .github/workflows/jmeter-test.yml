@@ -9,7 +9,7 @@ on:
 jobs:
   jmeter-test:
     runs-on: ubuntu-latest
-    environment: USERS_COUNT  # <-- This links the job to the USERS_COUNT environment
+    environment: test_env  # <-- This links the job to the USERS_COUNT environment
 
     steps:
       - name: Checkout Repository
