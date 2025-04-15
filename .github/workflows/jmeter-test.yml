@@ -9,6 +9,7 @@ on:
 jobs:
   jmeter-test:
     runs-on: ubuntu-latest
+    environment: USERS_COUNT  # <-- This links the job to the USERS_COUNT environment
 
     steps:
       - name: Checkout Repository
@@ -20,38 +21,14 @@ jobs:
           sudo apt install -y openjdk-11-jdk
           wget https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.tgz
           tar -xvzf apache-jmeter-5.6.3.tgz
-          # echo "JMETER_HOME=$(pwd)/apache-jmeter-5.6.3" >> $GITHUB_ENV
-          # echo "PATH=$JMETER_HOME/bin:$PATH" >> $GITHUB_ENV
           echo "JMETER_HOME=$(pwd)/apache-jmeter-5.6.3" >> $GITHUB_ENV
           echo "$JMETER_HOME/bin:$PATH" >> $GITHUB_PATH
 
-      # - name: Debug JMeter Installation
-      #   run: |
-      #       echo "🔍 Checking JMeter Installation..."
-      #       echo "JMETER_HOME: $JMETER_HOME"
-      #       ls -l $JMETER_HOME/bin
-      #       echo "🔍 Checking PATH..."
-      #       echo $PATH
-      #       echo "🔍 Checking if JMeter is recognized..."
-      #       command -v jmeter || echo "⚠️ JMeter not found in PATH"
-      #       echo "🔍 Trying to run JMeter directly from the extracted folder..."
-      #       $JMETER_HOME/bin/jmeter -v || echo "⚠️ JMeter execution failed!"
-
-          
-      # - name: Verify JMeter Installation
-      #   run: |
-      #     echo "JMeter Home: $JMETER_HOME"
-      #     ls -l $JMETER_HOME/bin
-      #     which jmeter
-
-      # - name: Run JMeter Tests
-      #   run: |
-      #     $JMETER_HOME/bin/jmeter -n -t sample_test.jmx -l results.jtl
       - name: Run JMeter Test with Parameters
         run: |
           $JMETER_HOME/bin/jmeter -n \
             -t sample_test.jmx \
-            -Jusers=${USERS_COUNT} \
+            -Jusers=${{ secrets.USERS_COUNT }} \
             -Jrampup=10 \
             -Jloops=5 \
             -l results.jtl
