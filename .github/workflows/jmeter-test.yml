@@ -44,9 +44,18 @@ jobs:
       #     ls -l $JMETER_HOME/bin
       #     which jmeter
 
-      - name: Run JMeter Tests
+      # - name: Run JMeter Tests
+      #   run: |
+      #     $JMETER_HOME/bin/jmeter -n -t sample_test.jmx -l results.jtl
+      - name: Run JMeter Test with Parameters
         run: |
-          $JMETER_HOME/bin/jmeter -n -t sample_test.jmx -l results.jtl
+          $JMETER_HOME/bin/jmeter -n \
+            -t jmeter/sample_test.jmx \
+            -Jusers=${USERS_COUNT} \
+            -Jrampup=10 \
+            -Jloops=5 \
+            -l jmeter/results.jtl \
+            -e -o jmeter/report
 
       - name: Generate JMeter Report
         run: |
